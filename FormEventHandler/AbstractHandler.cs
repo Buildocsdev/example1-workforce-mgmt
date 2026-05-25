@@ -82,7 +82,6 @@ public abstract class AbstractHandler
     public virtual async Task Form_onDelete() { await record.Delete(true); }
     public virtual async Task Form_onAfterDelete() { }
     public virtual async Task Form_onCancel() { }
-    public virtual async Task Form_onConfirm() { }
     public virtual async Task Form_onClick(string fieldName) { }
     public virtual async Task Form_onRefresh(string fieldName, object value) { }
     public virtual async Task Form_onPrint() { }

@@ -151,9 +151,6 @@ public class EventHandlerHelper
     public async Task RunFormOnPrintEvent(string widgetEvent, string widgetName)
         => await InvokeMethod("Form_onPrint", widgetEvent, widgetName, string.Empty);
 
-    public async Task RunFormOnConfirmEvent()
-        => await InvokeMethod("Form_onConfirm", string.Empty, string.Empty, string.Empty);
-
     public async Task<(byte[] contents, string docName)> RunFormOnPrintEventAndReturnContents()
         => await InvokeMethodAndReturnContents("Form_onPrintReturnContents", "onPrintReturnContents", string.Empty, string.Empty);
 

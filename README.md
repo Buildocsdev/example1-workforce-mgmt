@@ -191,7 +191,6 @@ All hooks are defined in `FormEventHandler/AbstractHandler.cs`. Override only wh
 | `Form_onDelete` | `()` | Deletes the record (override to customise) |
 | `Form_onAfterDelete` | `()` | Record deleted successfully |
 | `Form_onCancel` | `()` | User cancels the form |
-| `Form_onConfirm` | `()` | User confirms a dialog |
 | `Form_onPrint` | `()` | Print is triggered |
 
 **Field events**
