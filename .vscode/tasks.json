@@ -1,0 +1,50 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/SampleApi/SampleApi.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "Start Backend (dotnet watch run)",
+            "type": "shell",
+            "command": "cd SampleApi; dotnet watch run",
+            "problemMatcher": [],
+            "isBackground": true,
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "group": "build"
+            }
+        },
+        {
+            "label": "Start Frontend (npm start)",
+            "type": "shell",
+            "command": "cd frontend; npm start",
+            "problemMatcher": [],
+            "isBackground": true,
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "group": "build"
+            }
+        },
+        {
+            "label": "Start Both (Frontend + Backend)",
+            "dependsOn": [
+                "Start Backend (dotnet watch run)",
+                "Start Frontend (npm start)"
+            ],
+            "problemMatcher": [],
+            "group": "build"
+        }
+    ]
+}

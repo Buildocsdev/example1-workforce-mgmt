@@ -1,0 +1,14 @@
+{
+  "record.saved": "Kanne salvestatud.",
+  "record.deleted": "Kanne kustutatud.",
+  "record.loaded": "Laaditud.",
+  "row.deleted": "Rida kustutatud.",
+  "rows.deleted": "{0} rida kustutatud.",
+  "record.submit.success": "Kanne edukalt esitatud.",
+  "record.deleted.success": "Kanne edukalt kustutatud.",
+  "Draft": "Mustand",
+  "Active": "Aktiivne",
+  "In Progress": "Töös",
+  "Completed": "Lõpetatud",
+  "Cancelled": "Tühistatud"
+}

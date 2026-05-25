@@ -1,0 +1,25 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "SampleApi",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/SampleApi/bin/Debug/net8.0/SampleApi.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/SampleApi",
+      "stopAtEntry": false,
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_URLS": "http://localhost:7000"
+      }
+    },
+    {
+      "name": "SampleApi (attach)",
+      "type": "coreclr",
+      "request": "attach",
+      "processName": "SampleApi"
+    }
+  ]
+}

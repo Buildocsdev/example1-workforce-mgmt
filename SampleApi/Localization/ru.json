@@ -1,0 +1,14 @@
+{
+  "record.saved": "Запись сохранена.",
+  "record.deleted": "Запись удалена.",
+  "record.loaded": "Загружено.",
+  "row.deleted": "Строка удалена.",
+  "rows.deleted": "{0} строк удалено.",
+  "record.submit.success": "Запись успешно отправлена.",
+  "record.deleted.success": "Запись успешно удалена.",
+  "Draft": "Черновик",
+  "Active": "Активный",
+  "In Progress": "В процессе",
+  "Completed": "Завершено",
+  "Cancelled": "Отменено"
+}
