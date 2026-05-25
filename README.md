@@ -2,6 +2,8 @@
 
 A full-stack reference application that demonstrates how to build an internal workforce management system using the [Buildocs](https://buildocs.com) platform. Forms, screens, and layouts are designed and iterated in the Buildocs visual editor; all business logic, data persistence, and file storage run locally in your own infrastructure.
 
+> **Note:** This example uses **C#** for the backend event handlers, but Buildocs is language-agnostic — the backend can be implemented in any language or framework that can serve HTTP endpoints.
+
 ---
 
 ## What this example covers
