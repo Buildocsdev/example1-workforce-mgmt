@@ -28,8 +28,8 @@ yarn-error.log*
 .DS_Store
 Thumbs.db
 
-# Claude Code local settings
-.claude/settings.local.json
+# Claude Code
+.claude/
 
 # User secrets / env
 appsettings.*.json
