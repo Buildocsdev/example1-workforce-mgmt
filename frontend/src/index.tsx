@@ -15,7 +15,7 @@ function App() {
   return (
     <I18nextProvider i18n={i18n}>
       <BrowserRouter>
-        <BuildocsProvider apiKey="5cdb2058-6227-49b0-af6e-8c6a42c3d448">
+        <BuildocsProvider apiKey="">
           <FormHostProvider>
               <div style={{ paddingBottom: '5rem', display: 'flex', justifyContent: 'flex-end', padding: '16px' }}>
                 <LanguageSwitcher />
