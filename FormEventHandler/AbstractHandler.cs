@@ -84,11 +84,8 @@ public abstract class AbstractHandler
     public virtual async Task Form_onCancel() { }
     public virtual async Task Form_onConfirm() { }
     public virtual async Task Form_onClick(string fieldName) { }
-    public virtual async Task Form_afterOnClick(string fieldName) { }
     public virtual async Task Form_onRefresh(string fieldName, object value) { }
     public virtual async Task Form_onPrint() { }
-    public virtual async Task Form_onStartSignProcess(SignProcRequestDto request) { }
-    public virtual async Task Form_onFinishSignProcess(SignProcRequestDto request) { }
     public virtual async Task Form_onBeforeUpload(string fieldName, object files)
     {
         bool wasNew = record.IsNewByRequest();

@@ -175,16 +175,61 @@ public class EventHandler : GenericFormHandler
 }
 ```
 
-Key lifecycle hooks:
+### Lifecycle hooks
 
-| Hook | When it fires |
+All hooks are defined in `FormEventHandler/AbstractHandler.cs`. Override only what you need — every method has a no-op default.
+
+**Form lifecycle**
+
+| Hook | Signature | When it fires |
+|---|---|---|
+| `Form_onInit` | `(bool loadFromDb)` | Form opens or refreshes |
+| `Form_onBeforeSave` | `()` | Before the record is written — validate here |
+| `Form_onSave` | `()` | Persists the record to DynamoDB (override to customise storage) |
+| `Form_onAfterSave` | `()` | Record saved successfully |
+| `Form_onBeforeDelete` | `()` | Before deletion — throw `UserWarningException` to cancel |
+| `Form_onDelete` | `()` | Deletes the record (override to customise) |
+| `Form_onAfterDelete` | `()` | Record deleted successfully |
+| `Form_onCancel` | `()` | User cancels the form |
+| `Form_onConfirm` | `()` | User confirms a dialog |
+| `Form_onPrint` | `()` | Print is triggered |
+
+**Field events**
+
+| Hook | Signature | When it fires |
+|---|---|---|
+| `Form_onClick` | `(string fieldName)` | A button or clickable field is activated |
+| `Form_onRefresh` | `(string fieldName, object value)` | A field value changes and triggers a refresh |
+
+**File upload**
+
+| Hook | Signature | When it fires |
+|---|---|---|
+| `Form_onBeforeUpload` | `(string fieldName, object files)` | Before files are uploaded — use to assign a guid to a new record |
+| `Form_onAfterUpload` | `(string fieldName, List<string>? uploadedFiles)` | After upload completes |
+
+**Table widget events**
+
+Table hooks can be scoped to a specific widget by prefixing the widget name (e.g. `certificatestbl_onTableLoadData`), or declared without a prefix to apply to all table widgets on the form.
+
+| Hook | Signature | When it fires |
+|---|---|---|
+| `{widget}_onTableLoadData` | `()` → `List<Dictionary<string, string>>` | Table widget requests its rows |
+| `{widget}_onTableCreateRecordEvent` | `()` | User clicks "Add" in the table |
+| `Form_onTableRunActionEvent` | `(string action, RowData rowData)` | A row-level action button is clicked |
+| `Form_onTableRunBatchActionEvent` | `(string action, object[] data)` | A batch action is applied to selected rows |
+| `Form_onTableEditRunActionEvent` | `(string action, string data)` | An action fires from an inline table edit |
+
+### Helper utilities available in every handler
+
+| Member | Purpose |
 |---|---|
-| `Form_onInit` | Form is opened or refreshed |
-| `Form_onAfterSave` | Record saved successfully |
-| `Form_onBeforeDelete` | Before a record is deleted (throw to cancel) |
-| `Form_onAfterDelete` | Record deleted successfully |
-| `{widget}_onTableLoadData` | Table widget requests its data |
-| `{widget}_onTableCreateRecordEvent` | User clicks "Add" in a table widget |
+| `cmd` | Build response commands — show messages, navigate, populate dropdowns |
+| `record` | Read and write the current DynamoDB record |
+| `screen` | Read or modify screen-level configuration |
+| `contextHandlerInstance` | Access request context values (guid, pluginCode, formCode, …) |
+| `Translate(key)` | Resolve a localisation key via the active plugin's translation files |
+| `SaveCurrentAndUpdateOriginator()` | Save the current record and propagate its guid to child forms — use when opening a linked record from a table widget |
 
 ---
 
