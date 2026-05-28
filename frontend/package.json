@@ -30,7 +30,7 @@
     "react-tabulator": "^0.21.0"
   },
   "scripts": {
-    "start": "set REACT_APP_NODE_ENV=development&&craco start",
+    "start": "craco start",
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject"
