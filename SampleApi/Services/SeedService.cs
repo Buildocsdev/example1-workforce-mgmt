@@ -29,6 +29,8 @@ public class SeedService : IHostedService
     {
         try
         {
+            await EnsureTableExistsAsync(ct);
+
             if (await HasExistingRecords(ct))
             {
                 _log.LogInformation("SeedService: EMPL records already exist — skipping seed.");
@@ -48,6 +50,44 @@ public class SeedService : IHostedService
     public Task StopAsync(CancellationToken ct) => Task.CompletedTask;
 
     // ── Helpers ───────────────────────────────────────────────────────────────
+
+    private async Task EnsureTableExistsAsync(CancellationToken ct)
+    {
+        try
+        {
+            await _dynamo.DescribeTableAsync(new DescribeTableRequest { TableName = _tableName }, ct);
+        }
+        catch (ResourceNotFoundException)
+        {
+            _log.LogInformation("SeedService: Table {Table} not found — creating…", _tableName);
+            await _dynamo.CreateTableAsync(new CreateTableRequest
+            {
+                TableName            = _tableName,
+                BillingMode          = BillingMode.PAY_PER_REQUEST,
+                KeySchema            = new List<KeySchemaElement>
+                {
+                    new KeySchemaElement("PK", KeyType.HASH),
+                    new KeySchemaElement("SK", KeyType.RANGE),
+                },
+                AttributeDefinitions = new List<AttributeDefinition>
+                {
+                    new AttributeDefinition("PK", ScalarAttributeType.S),
+                    new AttributeDefinition("SK", ScalarAttributeType.S),
+                },
+            }, ct);
+
+            string status;
+            do
+            {
+                await Task.Delay(500, ct);
+                var desc = await _dynamo.DescribeTableAsync(_tableName, ct);
+                status = desc.Table.TableStatus;
+            }
+            while (status != "ACTIVE");
+
+            _log.LogInformation("SeedService: Table {Table} is ready.", _tableName);
+        }
+    }
 
     private async Task<bool> HasExistingRecords(CancellationToken ct)
     {
