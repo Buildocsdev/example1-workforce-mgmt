@@ -71,7 +71,6 @@ public class EventHandlerHelper
     {
         await InvokeMethod($"Form_{widgetEvent}", widgetEvent, widgetName, string.Empty);
         await InvokeMethod($"{widgetName}_{widgetEvent}", widgetEvent, widgetName, string.Empty);
-        await InvokeMethod("Form_afterOnClick", widgetEvent, widgetName, string.Empty);
     }
 
     public async Task RunOnTableCreateRecordEvent(string widgetEvent, string widgetName)
