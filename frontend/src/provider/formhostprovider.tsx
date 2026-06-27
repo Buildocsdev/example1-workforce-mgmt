@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'; // useEffect kept for token fetch
+import React, { useEffect, useState } from 'react';
 
 import {
   type TLoadForm,
@@ -35,7 +35,7 @@ export function FormHostProvider({ children }: FormHostProviderProps) {
       .catch(e => console.error('Failed to fetch token:', e));
   }, []);
 
-  const hostBridge = useMemo<HostBridge>(() => ({
+  const hostBridge: HostBridge = {
     appSettings: {
       TOASTER_AUTOCLOSE: 1000,
       MAX_DOWNLOAD_NOCHUNK_FILESIZE: 10 * 1024 * 1024,
@@ -55,8 +55,7 @@ export function FormHostProvider({ children }: FormHostProviderProps) {
         const result = await myApi.runLoadForm({...args, ...buildocsApiResponse?.payload}, '/loadform');
         return result;
     },
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }), [isMobileDevice, width, height]);
+  };
 
   return (
     <BuildocsHostProvider hostBridge={hostBridge}>
