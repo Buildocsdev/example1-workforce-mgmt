@@ -158,9 +158,6 @@ public class DemoController : ControllerBase
     [HttpPost("runevent")]
     public virtual async Task<IActionResult> RunEvent([FromBody] PluginContextEventRequestDto request)
     {
-        _logger.LogDebug("RunEvent plugin={PluginCode} form={FormCode} event={Event} widget={Widget} definitionInRequest={HasDefinition}",
-            request.PluginCode, request.FormCode, request.WidgetEvent, request.WidgetName, request.Definition != null);
-
         var response = new HandlerResponse();
         response.Set(HandlerResponse.FieldAllowedValues, null);
         response.Set(HandlerResponse.FormData, null);
