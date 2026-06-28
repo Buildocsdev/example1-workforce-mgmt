@@ -289,7 +289,7 @@ public class DemoController : ControllerBase
                 response.Set(HandlerResponse.FECommand, await eventHandlerHelper.GetCommands());
                 response.Set(HandlerResponse.FieldAllowedValues, await eventHandlerHelper.GetFieldAllowedValues());
                 response.Set(HandlerResponse.FormData, await eventHandlerHelper.GetFormData());
-                response.Set(HandlerResponse.TableMeta, null);
+                response.Set(HandlerResponse.TableMeta, _requestContext.GetDataTableMeta());
                 if (request.Definition != null)
                     response.Set(HandlerResponse.FormDefinition, request.Definition);
 

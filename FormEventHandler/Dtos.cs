@@ -2,6 +2,23 @@ using Newtonsoft.Json;
 
 namespace FormEventHandler;
 
+public class DataTableMeta
+{
+    public int rowsPerPage { get; set; } = 0;
+    public int pageIndex { get; set; } = 0;
+    public bool serverPaginationEnabled { get; set; } = false;
+    public string? nextToken { get; set; } = string.Empty;
+    public string? paginationDirection { get; set; } = "first";
+    public string? previousToken { get; set; } = string.Empty;
+    public int rowCount { get; set; } = 0;
+    public string? qId { get; set; } = string.Empty;
+    public int lastRequestLimit { get; set; } = 0;
+    public bool? oppositeDirection { get; set; } = false;
+    // Encodes scan direction + ExclusiveStartKey for "current" re-fetch.
+    // Format: "F:{base64key}" (forward) or "R:{base64key}" (reversed); key part empty = start from table boundary.
+    public string? currentPageAnchor { get; set; }
+}
+
 /// <summary>
 /// Request DTO for plugin context events (load form, run event, file operations).
 /// </summary>
@@ -60,6 +77,8 @@ public class PluginContextEventRequestDto
 
     [JsonProperty("uiTranslations")]
     public Dictionary<string, string>? UiTranslations { get; set; }
+
+    public DataTableMeta? DataTableMeta { get; set; }
 }
 
 public class WidgetsStateDto

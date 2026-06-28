@@ -22,10 +22,10 @@ public class EventHandler : GenericFormHandler
 
     public async Task<List<Dictionary<string, string>>> employees_onTableLoadData()
     {
-        var result = new List<Dictionary<string, string>>();
-        if (_dynamoClient == null || _dbTableName == null) return result;
+        if (_dynamoClient == null || _dbTableName == null) return new List<Dictionary<string, string>>();
 
         string pluginCode = contextHandlerInstance.Get("pluginCode")?.ToString() ?? "";
+        var systemKeys = new HashSet<string> { "PK", "SK", "updatedAt" };
 
         var queryRequest = new QueryRequest
         {
@@ -37,34 +37,18 @@ public class EventHandler : GenericFormHandler
             }
         };
 
-        var systemKeys = new HashSet<string> { "PK", "SK", "updatedAt" };
-
-        QueryResponse response;
-        do
+        return await TableQueryHelper.ExecutePagedQueryAsync(_dynamoClient, queryRequest, item =>
         {
-            response = await _dynamoClient.QueryAsync(queryRequest);
-            foreach (var item in response.Items)
-            {
-                var row = new Dictionary<string, string>();
-
-                if (item.TryGetValue("PK", out var pk)) row["_pk"] = pk.S;
-                if (item.TryGetValue("SK", out var sk)) row["_sk"] = sk.S;
-
-                foreach (var kv in item)
-                    if (!systemKeys.Contains(kv.Key) && kv.Value.S != null){
-                        row[kv.Key] = string.Equals(kv.Key, "status", StringComparison.OrdinalIgnoreCase) ? Translate(kv.Value.S) : kv.Value.S;
-                    }
-
-                row["_plugincode"] = row["pluginCode"];
-                row["_code"] = row["formCode"];
-                
-                result.Add(row);
-            }
-            queryRequest.ExclusiveStartKey = response.LastEvaluatedKey;
-        }
-        while (response.LastEvaluatedKey?.Count > 0);
-
-        return result;
+            var row = new Dictionary<string, string>();
+            if (item.TryGetValue("PK", out var pk)) row["_pk"] = pk.S;
+            if (item.TryGetValue("SK", out var sk)) row["_sk"] = sk.S;
+            foreach (var kv in item)
+                if (!systemKeys.Contains(kv.Key) && kv.Value.S != null)
+                    row[kv.Key] = string.Equals(kv.Key, "status", StringComparison.OrdinalIgnoreCase) ? Translate(kv.Value.S) : kv.Value.S;
+            row["_plugincode"] = row["pluginCode"];
+            row["_code"] = row["formCode"];
+            return row;
+        }, _requestContext, qId: "employees");
     }
 
     public async Task exportbtn_OnClick()
