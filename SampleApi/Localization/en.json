@@ -1,9 +1,9 @@
 {
-  "record.saved": "Work item saved.",
-  "record.deleted": "Work item deleted.",
+  "record.saved": "Record saved.",
+  "record.deleted": "Record deleted.",
   "record.loaded": "Loaded.",
   "row.deleted": "Row deleted.",
   "rows.deleted": "{0} rows deleted.",
-  "record.submit.success": "Work item submitted successfully.",
+  "record.submit.success": "Record submitted successfully.",
   "record.deleted.success": "The record was successfully deleted."
 }
